@@ -14,11 +14,12 @@ export const createTable = pgTableCreator(
   (name) => `gallery_nextjs_exercise_${name}`,
 );
 
-export const posts = createTable(
-  "post",
+export const images = createTable(
+  "image",
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256 }),
+    name: d.varchar({ length: 256 }).notNull(),
+    url: d.varchar({ length: 256 }).notNull(),
     createdAt: d
       .timestamp({ withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
