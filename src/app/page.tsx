@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { db } from "~/server/db";
+import { posts } from "~/server/db/schema";
+import { type InferSelectModel } from "drizzle-orm";
 
 
 const mockUrls = [
@@ -15,8 +17,12 @@ const mockImages = mockUrls.map((url, index) => ({
 }))
 
 export default async function HomePage() {
-  const images = await db.query.posts.findMany()
-  console.log(images);
+  let images: InferSelectModel<typeof posts>[] = [];
+  try {
+    images = await db.query.posts.findMany();
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
 
   return (
     <main className="">
