@@ -3,6 +3,7 @@ import { db } from "~/server/db";
 import { posts } from "~/server/db/schema";
 import { type InferSelectModel } from "drizzle-orm";
 
+export const dynamic = "force-dynamic";
 
 const mockUrls = [
   "https://swg5whyxch.ufs.sh/f/UuwtU6EOCNp4bXg8FfPnqCU98X6aDMK2WHmO7f13LicrdYzP",
