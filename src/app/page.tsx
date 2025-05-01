@@ -9,7 +9,9 @@ export const dynamic = "force-dynamic";
 export default async function HomePage() {
   let collected_images: InferSelectModel<typeof images>[] = [];
   try {
-    collected_images = await db.query.images.findMany();
+    collected_images = await db.query.images.findMany({
+      orderBy: (model, { desc }) => desc(model.id),
+    });
   } catch (error) {
     console.error("Error fetching posts:", error);
   }
@@ -21,6 +23,7 @@ export default async function HomePage() {
           collected_images.map((image) => (
             <div key={image.id} className="w-48">
               <img src={image.url} alt="image" />
+              <div>{image.name}</div>
             </div>
           ))
         }
