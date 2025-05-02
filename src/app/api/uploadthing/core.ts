@@ -13,7 +13,7 @@ export const ourFileRouter = {
   imageUploader: f({
     image: {
       maxFileSize: "4MB",
-      maxFileCount: 1,
+      maxFileCount: 5,
     },
   })
     // Set permissions and file types for this FileRoute
@@ -33,7 +33,8 @@ export const ourFileRouter = {
 
       await db.insert(images).values({
         name: file.name,
-        url: file.url,
+        url: file.ufsUrl,
+        userId: metadata.userId,
       });
       console.log("Image saved to database");
 
