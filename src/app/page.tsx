@@ -18,13 +18,15 @@ async function Images() {
       {
         collected_images.map((image) => (
           <div key={image.id} className="w-48">
-            <Image 
-              src={image.url} 
-              alt="image" 
-              width={192}
-              height={192}
-              className="object-cover"
-            />
+            <Link href={`/img/${image.id}`}>
+              <Image 
+                src={image.url} 
+                alt="image" 
+                width={192}
+                height={192}
+                className="object-cover"
+              />
+            </Link>
             <div>{image.name}</div>
           </div>
         ))
