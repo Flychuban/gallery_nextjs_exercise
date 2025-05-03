@@ -3,19 +3,14 @@ import { db } from "~/server/db";
 import { images } from "~/server/db/schema";
 import { type InferSelectModel } from "drizzle-orm";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
+import { getMyImages } from "~/server/queries";
+
 
 export const dynamic = "force-dynamic";
 
 
 async function Images() {
-  let collected_images: InferSelectModel<typeof images>[] = [];
-  try {
-    collected_images = await db.query.images.findMany({
-      orderBy: (model, { desc }) => desc(model.id),
-    });
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
+  const collected_images = await getMyImages();
 
   return (
     <div className="flex flex-wrap gap-4">
