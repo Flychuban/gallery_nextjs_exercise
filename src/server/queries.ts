@@ -25,16 +25,9 @@ export async function getImageById(id: number) {
   const user = auth();
 
   if (!user) throw new Error("You are Unauthorized. Please sign in.");
-
-  let image: InferSelectModel<typeof images> | undefined = undefined;
-  try {
-    image = await db.query.images.findFirst({
-      where: (model, { eq }) => eq(model.id, id),
-    });
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-  }
-
-  if (image?.userId !== (await user).userId) throw new Error("You are Unauthorized. Please sign in.");
+  const image = await db.query.images.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+  if (!image) throw new Error("Image not found");
   return image;
 }
