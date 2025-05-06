@@ -8,6 +8,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { ourFileRouter } from "~/app/api/uploadthing/core";
 import { Toaster } from "~/components/ui/sonner";
+import { PostHogProvider } from "./_analytics/provider";
 
 
 export const metadata: Metadata = {
@@ -23,22 +24,24 @@ export default function RootLayout({
 {
   return (
     <ClerkProvider>
-      <html lang="en" className={''}>
-        <NextSSRPlugin
-          routerConfig={extractRouterConfig(ourFileRouter)}
-        />
-        <body className="dark">
-          <div className="h-screen grid grid-rows-[auto, 1fr]">
-            <TopNav />
-            <main className="overflow-y-scroll">
-              {children}
-            </main>
-          </div>
-          {modal}
-          <div id="modal-root"/>
-          <Toaster />
-        </body>
-      </html>
+      <PostHogProvider>
+        <html lang="en" className={''}>
+          <NextSSRPlugin
+            routerConfig={extractRouterConfig(ourFileRouter)}
+          />
+          <body className="dark">
+            <div className="h-screen grid grid-rows-[auto, 1fr]">
+              <TopNav />
+              <main className="overflow-y-scroll">
+                {children}
+              </main>
+            </div>
+            {modal}
+            <div id="modal-root"/>
+            <Toaster />
+          </body>
+        </html>
+      </PostHogProvider>
     </ClerkProvider>
   );
 }
